@@ -5,12 +5,13 @@ import heapq
 def sort_approximately_sorted_array(sequence, k):
     # TODO - you fill in here.
     minheap = list()
-    # load heap with k+1 elements to make sure we have the smallest
-    for i in range(k+1):
-        heapq.heappush(minheap, sequence[i])
+    for item in sequence:
+        heapq.heappush(minheap, item)
+        if len(minheap) == k:
+            break
     result = list()
-    for i in range(k+1, len(sequence)):
-        heapq.heappush(minheap, sequence[i])
+    for item in sequence:
+        heapq.heappush(minheap, item)
         result.append(heapq.heappop(minheap))
     while minheap:
         result.append(heapq.heappop(minheap))
