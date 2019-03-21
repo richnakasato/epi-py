@@ -1,11 +1,29 @@
 #include <string>
+#include <unordered_map>
+#include <vector>
+
 #include "test_framework/generic_test.h"
+
 using std::string;
 
 bool IsLetterConstructibleFromMagazine(const string& letter_text,
                                        const string& magazine_text) {
-  // TODO - you fill in here.
-  return true;
+    // TODO - you fill in here.
+    std::vector<int> alpha(256,0);
+    for (const auto& c : letter_text) {
+        int i = c - '0';
+        --alpha[i];
+    }
+    for (const auto& c : magazine_text) {
+        int i = c - '0';
+        ++alpha[i];
+    }
+    for (size_t i=0; i<alpha.size(); ++i) {
+        if (alpha[i] < 0) {
+            return false;
+        }
+    }
+    return true;
 }
 
 int main(int argc, char* argv[]) {

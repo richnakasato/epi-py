@@ -11,8 +11,7 @@ def can_form_palindrome(s):
             counts[c] += 1
     odd_count = 0
     for c,v in counts.items():
-        if not c % 2:
-            odd_count += 1
+        odd_count += v%2
     return odd_count < 2
 
 
