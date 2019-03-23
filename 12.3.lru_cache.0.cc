@@ -8,26 +8,55 @@
 
 class LruCache {
     struct LruNode {
-        int isbn;
-        int price;
+        LruNode(int isbn, int price) : isbn_(isbn), price_(price) {}
+        int isbn_;
+        int price_;
     };
+
     size_t capacity_;
-    std::list<LruNode> lru_list;
-    std::unordered_map<int,std::list<LruNode>::iterator> isbn_lookup;
-    public:
-        LruCache(size_t capacity) :capacity_(capacity) {}
-        int Lookup(int isbn) {
-            // TODO - you fill in here.
-            return 0;
+    std::list<LruNode> lru_queue_;
+    std::unordered_map<int,std::list<LruNode>::iterator> isbn_lookup_;
+
+    LruNode get_and_erase_node(int isbn)
+    {
+        std::list<LruNode>::iterator it = isbn_lookup_[isbn];
+        LruNode temp = *it;
+        lru_queue_.erase(it);
+        return temp;
+    }
+
+    void erase_node(int isbn)
+    {
+        lru_queue_.erase(isbn_lookup_[isbn]);
+        return;
+    }
+
+public:
+    LruCache(size_t capacity) :capacity_(capacity) {}
+    int Lookup(int isbn)
+    {
+        // TODO - you fill in here.
+        if (isbn_lookup_.find(isbn) == isbn_lookup_.end()) return -1;
+        lru_queue_.push_front(get_and_erase_node(isbn));
+        return 0;
+    }
+    void Insert(int isbn, int price)
+    {
+        // TODO - you fill in here.
+        if (Lookup(isbn) == -1) return;
+        lru_queue_.push_front(get_and_erase_node(isbn));
+        if (lru_queue_.size() > capacity_) {
+            lru_queue_.pop_back();
         }
-        void Insert(int isbn, int price) {
-            // TODO - you fill in here.
-            return;
-        }
-        bool Erase(int isbn) {
-            // TODO - you fill in here.
-            return true;
-        }
+        return;
+    }
+    bool Erase(int isbn)
+    {
+        // TODO - you fill in here.
+        if (Lookup(isbn) == -1) return false;
+        erase_node(isbn);
+        return true;
+    }
 };
 struct Op {
     std::string code;
