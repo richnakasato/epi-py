@@ -47,7 +47,6 @@ Subarray FindSmallestSubarrayCoveringSet(const vector<string> &paragraph,
                         start = rhs;
                         end = lhs;
                     }
-                    break;
                 }
                 ++rhs;
             }
