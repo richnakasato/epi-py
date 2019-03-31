@@ -38,7 +38,7 @@ Subarray FindSmallestSubarrayCoveringSet(const vector<string> &paragraph,
                 if (keywords.find(paragraph[rhs]) != keywords.end()) {
                     --counts[paragraph[rhs]];
                     if (!counts[paragraph[rhs]]) {
-                        counts.erase[paragraph[rhs]];
+                        counts.erase(paragraph[rhs]);
                     }
                 }
                 if (counts.size() != keywords.size()) {
@@ -52,6 +52,7 @@ Subarray FindSmallestSubarrayCoveringSet(const vector<string> &paragraph,
             }
         }
         ++lhs;
+    }
     return {start, end};
 }
 
